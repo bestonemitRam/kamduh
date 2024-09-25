@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1015455424502",
+    "project_id": "kamdhenu-763d6",
+    "storage_bucket": "kamdhenu-763d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015455424502:android:03e564a2b095f75b9c31d7",
+        "android_client_info": {
+          "package_name": "com.eshopsingle.customer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB13xAzbhND-ci3qjekfB9-GUij3ZC0zTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
