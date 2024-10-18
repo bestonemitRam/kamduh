@@ -25,7 +25,8 @@ class BrandsListCubit extends Cubit<BrandsListState> {
   BrandsListCubit({required this.brandsRepository})
       : super(BrandsListInitial());
 
-  void getBrandsList() async {
+  void getBrandsList() async 
+  {
     emit(BrandsListInProgress());
     try {
       emit(BrandsListSuccess(brands: await brandsRepository.getAllBrands()));

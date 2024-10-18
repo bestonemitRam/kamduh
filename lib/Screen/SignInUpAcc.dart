@@ -21,7 +21,7 @@ class _SignInUpAccState extends State<SignInUpAcc> {
     return Padding(
         padding: const EdgeInsetsDirectional.only(top: 30.0),
         child: SvgPicture.asset(
-          'assets/images/homelogo.svg',
+          'assets/images/logokamduh.svg',
           colorFilter: ColorFilter.mode(
               Theme.of(context).colorScheme.primarytheme, BlendMode.srcIn),
         ));

@@ -51,7 +51,8 @@ Locale _locale(String languageCode) {
   return Locale(language.code);
 }
 
-String? getTranslated(BuildContext context, String key) {
+String? getTranslated(BuildContext context, String key) 
+{
   return AppLocalization.of(context)!.translate(key) ?? key;
 }
 

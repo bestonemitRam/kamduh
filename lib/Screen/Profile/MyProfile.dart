@@ -306,7 +306,8 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
               index,
               InkWell(
                 onTap: () {
-                  if (mounted) {
+                  if (mounted)
+                   {
                     selectLan = index;
                     _changeLan(langCode[index], ctx);
                     // });
@@ -385,7 +386,8 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
         .toList();
   }
 
-  void _changeLan(String language, BuildContext ctx) async {
+  void _changeLan(String language, BuildContext ctx) async 
+  {
     Locale locale = await setLocale(language);
 
     MyApp.setLocale(ctx, locale);
@@ -395,7 +397,9 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
       [oldPwd, newPwd, username, userEmail, userMob]) async {
     var apiBaseHelper = ApiBaseHelper();
     var data = {USER_ID: userID};
-    if ((oldPwd != "") && (newPwd != "")) {
+   
+    if ((oldPwd != "") && (newPwd != ""))
+     {
       data[OLDPASS] = oldPwd;
       data[NEWPASS] = newPwd;
     }

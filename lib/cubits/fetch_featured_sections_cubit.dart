@@ -55,15 +55,18 @@ class FetchFeaturedSectionsCubit extends Cubit<FetchFeaturedSectionsState> {
     }
   }
 
-  List<SectionModel> getFeaturedSections() {
+  List<SectionModel> getFeaturedSections() 
+  {
     if (state is FetchFeaturedSectionsSuccess) {
       return (state as FetchFeaturedSectionsSuccess).sectionList;
     }
     return [];
   }
 
-  hasError(dynamic response) {
-    if (response['error']) {
+  hasError(dynamic response) 
+  {
+    if (response['error']) 
+    {
       emit(FetchFeaturedSectionsFail(response['message']));
     }
   }

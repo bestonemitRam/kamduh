@@ -619,7 +619,7 @@ class _SignUpPageState extends State<SignUp> with TickerProviderStateMixin {
                     color: Theme.of(context).colorScheme.primarytheme,
                   ),
                   getLoginContainer(),
-                  getLogo(),
+                //  getLogo(),
                 ],
               )
             : noInternet(context));

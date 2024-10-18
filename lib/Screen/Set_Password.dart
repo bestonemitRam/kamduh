@@ -152,7 +152,7 @@ class _LoginPageState extends State<SetPass> with TickerProviderStateMixin {
     return Expanded(
       child: Center(
         child: SvgPicture.asset(
-          'assets/images/homelogo.svg',
+          'assets/images/logokamduh.svg',
           colorFilter: ColorFilter.mode(
               Theme.of(context).colorScheme.primarytheme, BlendMode.srcIn),
         ),

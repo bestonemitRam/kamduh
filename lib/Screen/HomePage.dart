@@ -24,6 +24,7 @@ import 'package:eshop/cubits/fetch_featured_sections_cubit.dart';
 import 'package:eshop/ui/widgets/AppBtn.dart';
 import 'package:eshop/ui/widgets/SimBtn.dart';
 import 'package:eshop/utils/Extensions/extensions.dart';
+import 'package:eshop/utils/Hive/hive_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -90,7 +91,10 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
+    getAuthToken();
     initCityOrPinCodeWiseDelivery();
+    context.read<BrandsListCubit>().getBrandsList();
+
     callApi();
     buttonController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
@@ -107,6 +111,14 @@ class _HomePageState extends State<HomePage>
     ));
 
     WidgetsBinding.instance.addPostFrameCallback((_) => _animateSlider());
+  }
+
+  getAuthToken() {
+    apiBaseHelper.postAPICall(generateToken, {}).then((value) async
+     {
+      await HiveUtils.setJWT(value);
+     
+    });
   }
 
   initCityOrPinCodeWiseDelivery() async {
@@ -132,9 +144,11 @@ class _HomePageState extends State<HomePage>
     super.build(context);
     SettingProvider settingsProvider =
         Provider.of<SettingProvider>(context, listen: false);
-    featuredSectionList =
-        context.watch<FetchFeaturedSectionsCubit>().getFeaturedSections();
+   
+    featuredSectionList =context.watch<FetchFeaturedSectionsCubit>().getFeaturedSections();
+
     hideAppbarAndBottomBarOnScroll(_scrollBottomBarController, context);
+
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.lightWhite,
         body: _isNetworkAvail
@@ -142,11 +156,10 @@ class _HomePageState extends State<HomePage>
                 color: Theme.of(context).colorScheme.primarytheme,
                 key: _refreshIndicatorKey,
                 onRefresh: _refresh,
-                child: BlocListener<FetchFeaturedSectionsCubit,
-                    FetchFeaturedSectionsState>(
+                child: BlocListener<FetchFeaturedSectionsCubit, FetchFeaturedSectionsState>(
                   listener: (context, state) {
                     if (state is FetchFeaturedSectionsSuccess) {
-                      setState(() {});
+                      // setState(() {});
                       if (pincodeOrCityName != null &&
                           pincodeOrCityName.toString().isNotEmpty) {
                         context.read<SettingProvider>().setPrefrence(
@@ -178,13 +191,10 @@ class _HomePageState extends State<HomePage>
                         _deliverPincode(),
                         _getSearchBar(),
                         _catList(),
-                        // const SizedBox(
-                        //   height: 5,
-                        // ),
                         _slider(),
                         const BrandsListWidget(),
-                        _section(),
-                        _mostLike(),
+                          _section(),
+                        //   _mostLike(),
                       ],
                     ),
                   ),
@@ -193,6 +203,7 @@ class _HomePageState extends State<HomePage>
   }
 
   Future<void> _refresh() {
+    print("refresss");
     context.read<HomeProvider>().setCatLoading(true);
     context.read<HomeProvider>().setSecLoading(true);
     context.read<HomeProvider>().setOfferLoading(true);
@@ -222,49 +233,49 @@ class _HomePageState extends State<HomePage>
                       controller: _controller,
                       physics: const AlwaysScrollableScrollPhysics(),
                       onPageChanged: (index) {
-                        setState(() {
-                          context.read<HomeProvider>().setCurSlider(index);
-                        });
+                        //   setState(() {
+                        context.read<HomeProvider>().setCurSlider(index);
+                        //    });
                       },
                       itemBuilder: (BuildContext context, int index) {
                         return pages[index];
                       },
                     ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    height: 35,
-                    left: 0,
-                    width: deviceWidth,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: map<Widget>(
-                        homeSliderList,
-                        (index, url) {
-                          return AnimatedContainer(
-                              duration: const Duration(milliseconds: 500),
-                              width: context.read<HomeProvider>().curSlider ==
-                                      index
-                                  ? 25
-                                  : 8.0,
-                              height: 8.0,
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 2.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: context.read<HomeProvider>().curSlider ==
-                                        index
-                                    ? Theme.of(context).colorScheme.fontColor
-                                    : Theme.of(context)
-                                        .colorScheme
-                                        .lightBlack
-                                        .withOpacity(0.7),
-                              ));
-                        },
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   bottom: 0,
+                  //   height: 35,
+                  //   left: 0,
+                  //   width: deviceWidth,
+                  //   child: Row(
+                  //     mainAxisSize: MainAxisSize.max,
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: map<Widget>(
+                  //       homeSliderList,
+                  //       (index, url) {
+                  //         return AnimatedContainer(
+                  //             duration: const Duration(milliseconds: 500),
+                  //             width: context.read<HomeProvider>().curSlider ==
+                  //                     index
+                  //                 ? 25
+                  //                 : 8.0,
+                  //             height: 8.0,
+                  //             margin: const EdgeInsets.symmetric(
+                  //                 vertical: 10.0, horizontal: 2.0),
+                  //             decoration: BoxDecoration(
+                  //               borderRadius: BorderRadius.circular(5.0),
+                  //               color: context.read<HomeProvider>().curSlider ==
+                  //                       index
+                  //                   ? Theme.of(context).colorScheme.fontColor
+                  //                   : Theme.of(context)
+                  //                       .colorScheme
+                  //                       .lightBlack
+                  //                       .withOpacity(0.7),
+                  //             ));
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               );
       },
@@ -309,6 +320,8 @@ class _HomePageState extends State<HomePage>
     } else {
       back = Theme.of(context).colorScheme.back5;
     }
+
+    print("sectionss data ${featuredSectionList[index].productList}");
 
     return featuredSectionList[index].productList!.isNotEmpty
         ? Column(
@@ -431,23 +444,29 @@ class _HomePageState extends State<HomePage>
 
   _section() {
     return Selector<HomeProvider, bool>(
-      builder: (context, data, child) {
-        return data
-            ? SizedBox(
-                width: double.infinity,
-                child: Shimmer.fromColors(
-                    baseColor: Theme.of(context).colorScheme.simmerBase,
-                    highlightColor: Theme.of(context).colorScheme.simmerHigh,
-                    child: sectionLoading()))
-            : ListView.builder(
-                padding: const EdgeInsets.all(0),
-                itemCount: featuredSectionList.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return _singleFeaturedSection(index);
-                },
-              );
+      builder: (context, data, child)
+       {
+        print("checkdsfdfdf data ${data}");
+        return
+            // data
+            //     ? SizedBox(
+            //         width: double.infinity,
+            //         child: Shimmer.fromColors(
+            //             baseColor: Theme.of(context).colorScheme.simmerBase,
+            //             highlightColor: Theme.of(context).colorScheme.simmerHigh,
+            //             child: sectionLoading()))
+            //     :
+
+            ListView.builder(
+          padding: const EdgeInsets.all(0),
+          itemCount: featuredSectionList.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index)
+           {
+            return _singleFeaturedSection(index);
+           },
+        );
       },
       selector: (_, homeProvider) => homeProvider.secLoading,
     );
@@ -712,13 +731,13 @@ class _HomePageState extends State<HomePage>
     if (_isNetworkAvail) {
       getSetting();
 
-      //
       var cityId = await context.read<SettingProvider>().getPrefrence("cityId");
       context.read<FetchFeaturedSectionsCubit>().fetchSections(context,
           userId: context.read<UserProvider>().userId,
           pincodeOrCityName: isCityWiseDelivery! ? cityId : pincodeOrCityName,
           isCityWiseDelivery: isCityWiseDelivery!);
-      context.read<BrandsListCubit>().getBrandsList();
+
+      // context.read<BrandsListCubit>().getBrandsList();
     } else {
       if (mounted) {
         setState(() {
@@ -1406,14 +1425,14 @@ class _HomePageState extends State<HomePage>
   Widget _buildImagePageItem(Model slider) {
     double height = deviceWidth! / 0.5;
 
+    print("check data****");
+
     return InkWell(
-      child: networkImageCommon(slider.image!, 
-      height, false,
-          height: height, width: double.maxFinite
-          ),
+      child: networkImageCommon(slider.image!, height, false,
+          height: height, width: double.maxFinite),
       onTap: () async {
         int curSlider = context.read<HomeProvider>().curSlider;
-        print("value ${homeSliderList[curSlider].type}");
+        print("value**4444 ${homeSliderList[curSlider].type}");
         if (homeSliderList[curSlider].type == "products") {
           Product? item = homeSliderList[curSlider].list;
           currentHero = homeHero;
@@ -2016,9 +2035,7 @@ class BrandsListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BrandsListCubit, BrandsListState>(
       builder: (context, state) {
-        if (state is BrandsListSuccess) 
-        {
-          print("check brand ${state.brands}");
+        if (state is BrandsListSuccess) {
           return state.brands.isNotEmpty
               ? Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
@@ -2050,21 +2067,13 @@ class BrandsListWidget extends StatelessWidget {
                           itemCount: state.brands.length,
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
+                          //   physics: const AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return Padding(
                               padding:
                                   const EdgeInsetsDirectional.only(end: 18),
                               child: GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   CupertinoPageRoute(
-                                  //     builder: (context) => ProductListScreen(
-                                  //
-                                  //     ),
-                                  //   ),
-                                  // );
                                   Navigator.pushNamed(
                                       context, Routers.productListScreen,
                                       arguments: {
@@ -2075,48 +2084,58 @@ class BrandsListWidget extends StatelessWidget {
                                         "fromSeller": false,
                                       });
                                 },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                      clipBehavior: Clip.antiAlias,
-                                      child: networkImageCommon(
-                                        state.brands[index].image,
-                                        60,
-                                        false,
-                                        boxFit: BoxFit.cover,
-                                        height: 60.0,
-                                        width: 60.0,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 8),
-                                      child: SizedBox(
-                                        width: 60,
-                                        child: Text(
-                                          state.brands[index].name,
-                                          maxLines: 2,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .copyWith(
-                                                fontFamily: 'ubuntu',
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .fontColor,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 12,
-                                              ),
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.center,
+                                child: Container(
+                                  // height: 60,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.1,
+                                  child: Card(
+                                    elevation: 0.0,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                          ),
+                                          clipBehavior: Clip.antiAlias,
+                                          child: networkImageCommon(
+                                            state.brands[index].image,
+                                            60,
+                                            false,
+                                            boxFit: BoxFit.cover,
+                                            height: 60.0,
+                                            width: 60.0,
+                                          ),
                                         ),
-                                      ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 8),
+                                          child: SizedBox(
+                                            width: 60,
+                                            child: Text(
+                                              state.brands[index].name,
+                                              maxLines: 2,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                    fontFamily: 'ubuntu',
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .fontColor,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 12,
+                                                  ),
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             );

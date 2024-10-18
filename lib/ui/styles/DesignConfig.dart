@@ -130,12 +130,12 @@ getThemeColor(BuildContext context) {
 
   if (systemBrightness == Brightness.dark &&
       applicationBrightness == Brightness.light) {
-    return 'assets/images/loginlogo.svg';
+    return 'assets/images/logokamduh.svg';
   } else if (systemBrightness == Brightness.light &&
       applicationBrightness == Brightness.light) {
-    return 'assets/images/loginlogo.svg';
+    return 'assets/images/logokamduh.svg';
   } else {
-    return 'assets/images/dark_loginlogo.svg';
+    return 'assets/images/logokamduh.svg';
   }
 }
 

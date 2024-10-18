@@ -77,7 +77,8 @@ class _SplashScreen extends State<Splash> {
 
         String getToken = await settingsProvider.getPrefrence(FCMTOKEN) ?? '';
         print("fcm token****$token");
-        if (token != getToken && token != null) {
+        if (token != getToken && token != null)
+         {
           print("register token***$token");
           registerToken(token);
         }

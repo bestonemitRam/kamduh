@@ -184,8 +184,10 @@ class HomePageState extends State<Dashboard>
   Widget build(BuildContext context) {
     return PopScope(
       canPop: _selBottom == 0,
-      onPopInvoked: (didPop) {
-        if (_selBottom != 0) {
+      onPopInvoked: (didPop)
+       {
+        if (_selBottom != 0) 
+        {
           _pageController.animateToPage(0,
               duration: const Duration(milliseconds: 400),
               curve: Curves.easeInOut);
@@ -201,17 +203,19 @@ class HomePageState extends State<Dashboard>
               appBar: _getAppBar(),
               body: PageView(
                 controller: _pageController,
-                children: const [
+                children: const 
+                [
                   HomePage(),
                   AllCategory(),
-                  FlashSale(),
+                  //  FlashSale(),
                   // Sale(),
                   Cart(
                     fromBottom: true,
                   ),
                   MyProfile()
                 ],
-                onPageChanged: (index) {
+                onPageChanged: (index)
+                 {
                   setState(() {
                     if (!context
                         .read<HomeProvider>()
@@ -391,7 +395,8 @@ class HomePageState extends State<Dashboard>
                 Theme.of(context).colorScheme.blackInverseInDarkTheme,
                 BlendMode.srcIn),
           ),
-          onPressed: () {
+          onPressed: () 
+          {
             // Navigator.push(
             //     context,
             //     CupertinoPageRoute(
@@ -487,28 +492,29 @@ class HomePageState extends State<Dashboard>
                     title: Text(getTranslated(context, 'category')!,
                         overflow: TextOverflow.ellipsis, softWrap: true),
                     activeColor: Theme.of(context).colorScheme.primarytheme),
-                BottomBarItem(
-                  icon: _selBottom == 2
-                      ? SvgPicture.asset(
-                          "${imagePath}sale02.svg",
-                          colorFilter: ColorFilter.mode(
-                              Theme.of(context).colorScheme.primarytheme,
-                              BlendMode.srcIn),
-                          width: 18,
-                          height: 20,
-                        )
-                      : SvgPicture.asset(
-                          "${imagePath}sale.svg",
-                          colorFilter: ColorFilter.mode(
-                              Theme.of(context).colorScheme.primarytheme,
-                              BlendMode.srcIn),
-                          width: 18,
-                          height: 20,
-                        ),
-                  title: Text(getTranslated(context, 'SALE')!,
-                      overflow: TextOverflow.ellipsis, softWrap: true),
-                  activeColor: Theme.of(context).colorScheme.primarytheme,
-                ),
+                // BottomBarItem(
+                //   icon: _selBottom == 2
+                //       ? SvgPicture.asset(
+                //           "${imagePath}sale02.svg",
+                //           colorFilter: ColorFilter.mode(
+                //               Theme.of(context).colorScheme.primarytheme,
+                //               BlendMode.srcIn),
+                //           width: 18,
+                //           height: 20,
+                //         )
+                //       : SvgPicture.asset(
+                //           "${imagePath}sale.svg",
+                //           colorFilter: ColorFilter.mode(
+                //               Theme.of(context).colorScheme.primarytheme,
+                //               BlendMode.srcIn),
+                //           width: 18,
+                //           height: 20,
+                //         ),
+                //   title: Text(getTranslated(context, 'SALE')!,
+                //       overflow: TextOverflow.ellipsis, softWrap: true),
+                //   activeColor: Theme.of(context).colorScheme.primarytheme,
+                // ),
+
                 BottomBarItem(
                   icon: Selector<UserProvider, String>(
                     builder: (context, data, child) {

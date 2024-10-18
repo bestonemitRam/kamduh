@@ -126,8 +126,8 @@ void main() async {
             create: (context) => PersonalConverstationsCubit(ChatRepository())),
         //cubit to get brand details on home page
         BlocProvider<BrandsListCubit>(
-            create: (context) =>
-                BrandsListCubit(brandsRepository: BrandsRepository())),
+            create: (context) => BrandsListCubit(brandsRepository: BrandsRepository())),
+      
         BlocProvider<FetchCitiesCubit>(create: (context) => FetchCitiesCubit()),
         BlocProvider<FetchFeaturedSectionsCubit>(
             create: (context) => FetchFeaturedSectionsCubit())
@@ -146,7 +146,8 @@ class MyApp extends StatefulWidget {
 
   MyApp({Key? key, required this.sharedPreferences}) : super(key: key);
 
-  static void setLocale(BuildContext context, Locale newLocale) {
+  static void setLocale(BuildContext context, Locale newLocale) 
+  {
     _MyAppState state = context.findAncestorStateOfType<_MyAppState>()!;
     state.setLocale(newLocale);
   }
@@ -207,7 +208,8 @@ class _MyAppState extends State<MyApp> {
           GlobalCupertinoLocalizations.delegate,
         ],
         localeResolutionCallback: (locale, supportedLocales) {
-          for (var supportedLocale in supportedLocales) {
+          for (var supportedLocale in supportedLocales) 
+          {
             if (supportedLocale.languageCode == locale!.languageCode &&
                 supportedLocale.countryCode == locale.countryCode) {
               return supportedLocale;

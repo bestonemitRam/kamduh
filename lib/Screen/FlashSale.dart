@@ -621,13 +621,18 @@ class _FlashSaleState extends State<FlashSale> with TickerProviderStateMixin {
     return result;
   }
 
-  Future<void> callApi() async {
+  Future<void> callApi() async 
+  {
     bool avail = await isNetworkAvailable();
-    if (avail) {
+    if (avail)
+     {
       getFlashSale();
       getOfferImages();
-    } else {
-      if (mounted) {
+    } 
+    else 
+    {
+      if (mounted) 
+      {
         setState(() {
           _isNetworkAvail = false;
         });

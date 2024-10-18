@@ -803,7 +803,8 @@ class _LoginPageState extends State<LoginScreen> with TickerProviderStateMixin {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: _isNetworkAvail
-            ? Stack(
+            ? 
+            Stack(
                 children: [
                   Image.asset(
                     'assets/images/doodle.png',
@@ -1537,7 +1538,7 @@ class _LoginPageState extends State<LoginScreen> with TickerProviderStateMixin {
         width: 150,
         height: 150,
         child: SvgPicture.asset(
-          "assets/images/homelogo.svg",
+          "assets/images/logokamduh.svg",
           colorFilter: ColorFilter.mode(
               Theme.of(context).colorScheme.primarytheme, BlendMode.srcIn),
         ),

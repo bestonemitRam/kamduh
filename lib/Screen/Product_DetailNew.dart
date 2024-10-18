@@ -446,6 +446,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    print("checke dataaaysdtfyuwtefyeuyrfyute");
     deviceHeight = MediaQuery.of(context).size.height;
     deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -3379,6 +3380,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
 
               items.addAll(
                   mainlist.map((data) => Product.fromJson(data)).toList());
+
               setState(() {
                 productData = items[0];
                 _isLoading = false;
@@ -4233,65 +4235,8 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
         : const SizedBox();
   }
 
-  /* Future<void> getShare() async {
-    final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: deepLinkUrlPrefix,
-      link: Uri.parse(
-          'https://$deepLinkName/?index=${widget.index}&secPos=${widget.secPos}&list=${widget.list}&id=${productData!.id}'),
-      androidParameters: const AndroidParameters(
-        packageName: packageName,
-        minimumVersion: 1,
-      ),
-      iosParameters: const IOSParameters(
-        bundleId: iosPackage,
-        minimumVersion: '1',
-        appStoreId: appStoreId,
-      ),
-      socialMetaTagParameters: SocialMetaTagParameters(
-          title: title ??
-              getTranslatedValue(
-                context,
-                "app_name",
-              ),
-          imageUrl: Uri.parse(imageUrl ?? ""),
-          description: description),
-    );
-
-    shortenedLink =
-        await FirebaseDynamicLinks.instance.buildShortLink(parameters);
-
-    Future.delayed(Duration.zero, () {
-      shareLink =
-          "\n$appName\n${getTranslated(context, 'APPFIND')}$androidLink$packageName\n${getTranslated(context, 'IOSLBL')}\n$iosLink";
-    });
-  }*/
-
   Future<String> generateShortDynamicLink(Product data) async {
     return "https://${AppSettings.shareNavigationWebUrl}/items-details/?index=${widget.index}&secPos=${widget.secPos}&list=${widget.list}&id=${productData!.id}";
-    /*final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: deepLinkUrlPrefix,
-      link: Uri.parse(
-          'https://$deepLinkName/?index=${widget.index}&secPos=${widget.secPos}&list=${widget.list}&id=${productData!.id}'),
-      androidParameters: AndroidParameters(
-        packageName: packageName,
-        minimumVersion: 1,
-      ),
-      iosParameters: IOSParameters(
-        bundleId: iosPackage,
-        minimumVersion: '1',
-        appStoreId: appStoreId,
-      ),
-      socialMetaTagParameters: SocialMetaTagParameters(
-        title: appName,
-        imageUrl: Uri.parse(data.image ?? ""),
-        description: data.name,
-      ),
-    );
-
-    final ShortDynamicLink shortLink =
-        await FirebaseDynamicLinks.instance.buildShortLink(parameters);
-    Uri uri = shortLink.shortUrl;
-    return uri.toString();*/
   }
 
   playIcon(Product data) {
